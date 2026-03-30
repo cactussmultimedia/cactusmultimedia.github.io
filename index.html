@@ -215,7 +215,7 @@
 <section class="clock-section">
   <div class="clock-wrap" id="clockWrap">
     <div class="clock-ring"></div>
-    <div class="center-photo"><img src="mojoprincipal.jpg" alt="María José"></div>
+    <div class="center-photo"><img src="https://res.cloudinary.com/dqrlv176l/image/upload/xv-mariajose/mojoprincipal.jpg" alt="María José"></div>
     <div class="center-label">XV Años</div>
   </div>
 </section>
@@ -237,8 +237,8 @@
 </div>
 
 <script>
-const B = "2026-03-29/";
-const C = (carpeta, fotos) => fotos.map(f => B + carpeta + "/" + f);
+const CDN = "https://res.cloudinary.com/dqrlv176l/image/upload/xv-mariajose/";
+const C = (carpeta, fotos) => fotos.map(f => CDN + encodeURIComponent(carpeta) + "/" + f.replace(".JPG", ".jpg"));
 
 const paquetes = [
   { nombre:"Paquete 1",  fotos: C("Nueva carpeta con elementos",    ["DSC_0788.JPG","DSC_0789.JPG","DSC_0792.JPG","DSC_0793.JPG","DSC_0795.JPG","DSC_0797.JPG"]) },
