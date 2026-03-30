@@ -254,16 +254,8 @@
     max-width: min(80vw,80vh); max-height: min(80vw,80vh);
   }
 
-  .lb-mosaic-bg {
-    position: fixed; inset: 0; z-index: 0;
-    background-image: url("https://res.cloudinary.com/dqrlv176l/image/upload/w_40,h_40,c_fill,b_black,f_jpg/xv-mariajose/cuadrometalico");
-    background-size: 42px 42px;
-    background-repeat: repeat;
-    opacity: 0;
-    transition: opacity 1.5s ease;
-    animation: brisa 6s ease-in-out infinite;
-  }
-  .lb-mosaic-bg.visible { opacity: 0.85; }
+  
+  
   @keyframes brisa {
     0%   { background-position: 0px 0px; }
     25%  { background-position: 3px 2px; }
@@ -272,17 +264,8 @@
     100% { background-position: 0px 0px; }
   }
 
-  .cuadrito {
-    position: fixed;
-    width: 42px; height: 42px;
-    background-image: url("https://res.cloudinary.com/dqrlv176l/image/upload/w_42,h_42,c_fill,b_black,f_jpg/xv-mariajose/cuadrometalico");
-    background-size: cover;
-    opacity: 0;
-    transition: opacity 0.8s ease;
-    pointer-events: none;
-    z-index: 0;
-  }
-  .cuadrito.visible { opacity: 0.9; }
+  
+  
 </style>
 </head>
 <body>
@@ -409,30 +392,3 @@ function iniciarReveal(){ mosaic.innerHTML=""; finalCanvas.style.display="none";
 function construirMosaico(img){ const SIZE=mosaic.offsetWidth; const COLS=5,ROWS=3,total=COLS*ROWS; const pw=SIZE/COLS,ph=SIZE/ROWS; const scale=Math.max(SIZE/img.width,SIZE/img.height); const sw=img.width*scale,sh=img.height*scale; const ox=(sw-SIZE)/2,oy=(sh-SIZE)/2; const piezas=[]; for(let r=0;r<ROWS;r++){ for(let c=0;c<COLS;c++){ const idx=r*COLS+c; const wrap=document.createElement("div"); wrap.className="mosaic-piece"; wrap.style.cssText="left:"+c*pw+"px;top:"+r*ph+"px;width:"+pw+"px;height:"+ph+"px;"; const cv=document.createElement("canvas"); cv.width=pw; cv.height=ph; const ctx=cv.getContext("2d"); ctx.drawImage(img,-(c*pw+ox/(sw/SIZE)),-(r*ph+oy/(sh/SIZE)),sw,sh); ctx.fillStyle="rgba(20,10,10,0.55)"; ctx.fillRect(0,0,pw,ph); const label=document.createElement("div"); label.className="roman"; label.textContent=romanos[idx]; wrap.appendChild(cv); wrap.appendChild(label); mosaic.appendChild(wrap); piezas.push({wrap,label,ctx,img,ox,oy,sw,sh,pw,ph,c,r}); } } piezas.forEach(({wrap,label,ctx,img,ox,oy,sw,sh,pw,ph,c,r},i)=>{ setTimeout(()=>{ wrap.style.opacity="1"; setTimeout(()=>{ ctx.clearRect(0,0,pw,ph); ctx.drawImage(img,-(c*pw+ox/(sw/SIZE)),-(r*ph+oy/(sh/SIZE)),sw,sh); setTimeout(()=>{ label.style.opacity="0"; },400); },900); },i*500); }); setTimeout(()=>mostrarFinal(img,SIZE,ox,oy,sw,sh),total*500+1400); }
 function mostrarFinal(img,SIZE,ox,oy,sw,sh){ finalCanvas.width=SIZE; finalCanvas.height=SIZE; const ctx=finalCanvas.getContext("2d"); ctx.drawImage(img,-ox/(sw/SIZE),-oy/(sh/SIZE),sw,sh); finalCanvas.style.display="block"; requestAnimationFrame(()=>requestAnimationFrame(()=>{ finalCanvas.style.opacity="1"; setTimeout(()=>{ mosaic.style.opacity="0"; },600); })); }
 
-function crearFondoCuadritos() {
-  const existentes = document.querySelectorAll(".cuadrito");
-  existentes.forEach(c => c.remove());
-  const cols = Math.ceil(window.innerWidth / 42) + 1;
-  const rows = Math.ceil(window.innerHeight / 42) + 1;
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      const div = document.createElement("div");
-      div.className = "cuadrito";
-      div.style.left = (c * 42) + "px";
-      div.style.top  = (r * 42) + "px";
-      const dx = (Math.random() * 16 - 8).toFixed(2);
-      const dy = (Math.random() * 16 - 8).toFixed(2);
-      const dur = (1.5 + Math.random() * 2).toFixed(2);
-      const delay = (Math.random() * 2).toFixed(2);
-      div.style.animation = `mover-${c}-${r} ${dur}s ease-in-out ${delay}s infinite`;
-      const styleEl = document.createElement("style");
-      styleEl.textContent = `@keyframes mover-${c}-${r} { 0%,100%{transform:translate(0,0)} 50%{transform:translate(${dx}px,${dy}px)} }`;
-      document.head.appendChild(styleEl);
-      lbCenter.appendChild(div);
-      setTimeout(() => div.classList.add("visible"), 100 + Math.random() * 800);
-    }
-  }
-}
-</script>
-</body>
-</html>
