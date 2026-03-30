@@ -201,6 +201,48 @@
     .lb-stage { padding: 5rem 2.5rem; }
     .lb-prev { left: 0.2rem; } .lb-next { right: 0.2rem; }
   }
+
+  .lb-center {
+    display: none; position: fixed; inset: 0; z-index: 2000;
+    background: rgba(10,5,5,0.96); backdrop-filter: blur(12px);
+    align-items: center; justify-content: center;
+  }
+  .lb-center.active { display: flex; }
+  .lb-center-close {
+    position: absolute; top: 1.2rem; right: 1.2rem;
+    background: none; border: 1px solid rgba(255,255,255,0.2);
+    color: white; width: 36px; height: 36px; border-radius: 50%;
+    cursor: pointer; font-size: 0.9rem; z-index: 10;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .lb-center-close:hover { background: rgba(255,255,255,0.12); }
+  .mosaic {
+    position: relative;
+    width: min(80vw, 80vh); height: min(80vw, 80vh);
+    border-radius: 50%; overflow: hidden;
+  }
+  .mosaic-piece {
+    position: absolute; overflow: hidden; opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  .mosaic-piece canvas { display: block; }
+  .mosaic-piece .roman {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Montserrat", sans-serif; font-weight: 300;
+    letter-spacing: 0.15em; font-size: clamp(1.1rem, 3.5vw, 2rem);
+    color: rgba(232,213,163,0.95);
+    text-shadow: 0 0 16px rgba(0,0,0,0.9), 0 2px 8px rgba(0,0,0,0.7);
+    pointer-events: none; opacity: 1; transition: opacity 0.7s ease;
+  }
+  #finalCanvas {
+    display: none; position: absolute;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px #e8d5a3, 0 0 0 10px rgba(242,196,206,0.25), 0 30px 100px rgba(0,0,0,0.7);
+    opacity: 0; transition: opacity 1s ease;
+    max-width: min(80vw,80vh); max-height: min(80vw,80vh);
+  }
 </style>
 </head>
 <body>
@@ -307,5 +349,11 @@ let tx=0;
 lb.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;});
 lb.addEventListener('touchend',e=>{ const dx=e.changedTouches[0].clientX-tx; if(Math.abs(dx)>40) dx<0?sig():ant(); });
 </script>
+
+<div class="lb-center" id="lbCenter">
+  <button class="lb-center-close" id="lbCenterClose">✕</button>
+  <div class="mosaic" id="mosaic"></div>
+  <canvas id="finalCanvas"></canvas>
+</div>
 </body>
 </html>
