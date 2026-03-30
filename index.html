@@ -251,6 +251,24 @@
     opacity: 0; transition: opacity 1s ease;
     max-width: min(80vw,80vh); max-height: min(80vw,80vh);
   }
+
+  .lb-mosaic-bg {
+    position: fixed; inset: 0; z-index: 0;
+    background-image: url("https://res.cloudinary.com/dqrlv176l/image/upload/w_40,h_40,c_fill,b_black,f_jpg/xv-mariajose/cuadrometalico");
+    background-size: 42px 42px;
+    background-repeat: repeat;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+    animation: brisa 6s ease-in-out infinite;
+  }
+  .lb-mosaic-bg.visible { opacity: 0.85; }
+  @keyframes brisa {
+    0%   { background-position: 0px 0px; }
+    25%  { background-position: 3px 2px; }
+    50%  { background-position: 0px 4px; }
+    75%  { background-position: -3px 2px; }
+    100% { background-position: 0px 0px; }
+  }
 </style>
 </head>
 <body>
