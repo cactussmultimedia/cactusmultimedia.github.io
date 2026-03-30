@@ -420,9 +420,9 @@ function crearFondoCuadritos() {
       div.className = "cuadrito";
       div.style.left = (c * 42) + "px";
       div.style.top  = (r * 42) + "px";
-      const dx = (Math.random() * 6 - 3).toFixed(2);
-      const dy = (Math.random() * 6 - 3).toFixed(2);
-      const dur = (4 + Math.random() * 4).toFixed(2);
+      const dx = (Math.random() * 16 - 8).toFixed(2);
+      const dy = (Math.random() * 16 - 8).toFixed(2);
+      const dur = (1.5 + Math.random() * 2).toFixed(2);
       const delay = (Math.random() * 2).toFixed(2);
       div.style.animation = `mover-${c}-${r} ${dur}s ease-in-out ${delay}s infinite`;
       const styleEl = document.createElement("style");
